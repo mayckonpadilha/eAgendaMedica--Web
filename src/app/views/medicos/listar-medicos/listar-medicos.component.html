@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-md-11 d-grid gap-3 ps-0">
+      <h1 class="fs-2">Medicos</h1>
+
+      <button
+        routerLink="/medicos/inserir"
+        mat-raised-button
+        class="me-auto py-4 px-5 fs-6"
+        color="primary"
+      >
+        <mat-icon>add</mat-icon>
+        Novo Medico
+      </button>
+
+      <div class="row gap-3">
+        <mat-card [ngClass]="{'border border-danger' : medico.emAtividade}" *ngFor="let medico of medicos$ | async" appCardHover class="col-12 col-md-9 col-lg-5 col-xxl-3">
+          <mat-card-header>
+            <mat-card-title>
+              <span>{{medico.nome}}</span>
+
+            </mat-card-title>
+            
+          </mat-card-header>
+  
+          
+
+          <mat-card-content class="mt-3 fs-6">
+            <span>CRM: {{medico.crm}}</span>
+            
+          </mat-card-content>
+          <mat-card-content class="mt-3 fs-6">
+            <span>Dias com Atividades:</span>        
+                <div *ngFor="let horas of medico.horasOcupadas | slice:0:2"  class="mt-3 fs-6">
+                  <span  class="mt-3 fs-6">{{horas.diaDaAtividade | date}} início às {{horas.horaInicio}} com término às {{horas.horaFinal}}</span>
+                </div> 
+                <mat-divider></mat-divider>
+          </mat-card-content>
+
+          <mat-card-content *ngIf="medico.emAtividade == true" class="mt-3 fs-6">
+            <span>Está em atividade</span>
+          </mat-card-content>
+
+          <mat-card-content *ngIf="medico.horasDeDescanso != '00:00:00' " class="mt-3 fs-6">
+            <span>Medico em Descanso, restam {{medico.horasDeDescanso.slice(0,2)}} horas e {{medico.horasDeDescanso.slice(3,5)}} minutos</span>
+          </mat-card-content>
+  
+          <mat-card-actions class="pe-0" align="end">
+            <button
+              mat-icon-button
+              matTooltip="Editar"
+              color="accent"
+              routerLink="/medicos/editar/{{medico.id}}"
+            >
+              <mat-icon>edit_note</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              matTooltip="Excluir"
+              color="warn"
+              routerLink="/medicos/excluir/{{medico.id}}"
+            >
+              <mat-icon>delete_sweep</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+
+
+        </div>
+        
+    </div>
+  </div>

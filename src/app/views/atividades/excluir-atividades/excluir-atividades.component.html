@@ -1,0 +1,58 @@
+
+<div class="row justify-content-center align-items-center mt-5">
+    <div class="col-md-5">
+      <h1 class="fs-2">Excluir Atividade</h1>
+  
+      <p class="fs-5">
+        Você tem certeza que deseja excluir seguinte atividade?
+      </p>
+  
+      <mat-list *ngIf="atividade$ | async as atividade">
+        
+        <mat-list-item>
+          <div class="d-flex justify-content-between">
+            <span>Assunto:</span>
+            <span>{{atividade.assunto}}</span>
+          </div>
+        </mat-list-item>
+
+        <mat-list-item>
+              <span>Data: {{atividade.dataRealizacao | date }}</span>
+              <span></span>
+        </mat-list-item>
+
+        <mat-list-item>
+            <span>Horário:</span>
+            <span>  {{atividade.horaInicio}} - <span>{{atividade.horaTermino}}</span></span>
+        </mat-list-item>
+
+          
+            <div class="d-flex justify-content-center">
+                <mat-divider></mat-divider>
+                <mat-list>
+                    <mat-divider></mat-divider>
+                    <h3>Medico(s) envolvidos: </h3>
+                    <mat-list-item *ngFor="let m of atividade.medicos">Medico {{m.nome}} com o CRM: {{m.crm}}</mat-list-item>
+                </mat-list>
+            </div>
+  
+        <mat-divider></mat-divider>
+  
+      </mat-list>
+  
+      <div class="d-flex justify-content-end gap-2 mt-5">
+        <button (click)="excluir()" class="py-3 px-5" color="warn" mat-raised-button>
+          Confirmar
+        </button>
+        <button
+          routerLink="/atividades/listar"
+          class="py-3 px-5"
+          color="primary"
+          mat-stroked-button
+        >
+          Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+  

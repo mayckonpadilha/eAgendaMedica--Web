@@ -1,0 +1,74 @@
+  
+      <form [formGroup]="form" (ngSubmit)="gravar()" class="d-grid mt-4">
+        <mat-form-field appearance="outline">
+          <mat-label for="nome">Assunto</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Ex. cirurgia em...."
+              formControlName="assunto"
+            />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label for="dataRealizacao">Data Da Atividade</mat-label>
+          <input formControlName="dataRealizacao" matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">  
+              <mat-label for="horaInicio">Hora de Inicio</mat-label>
+                  <input [format]="24"  formControlName="horaInicio" matInput [ngxMatTimepicker]="pickerA">  
+              <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>  
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">  
+            <mat-label for="horaTermino">Hora Termino</mat-label>
+                <input [format]="24" formControlName="horaTermino" matInput [ngxMatTimepicker]="pickerB">  
+            <ngx-mat-timepicker  #pickerB></ngx-mat-timepicker>  
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <mat-label for="tipoAtividadeEnum">Tipo de Atividade</mat-label>
+            <mat-select formControlName="tipoAtividadeEnum"> 
+                <mat-option (click)="mudarParaCirurgia()" [value]="0">Cirurgia</mat-option>
+                <mat-option (click)="mudarParaConsulta()"[value]="1">Consulta</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="Ehcirurgia == true" appearance="outline">
+            <mat-label>Medicos</mat-label>
+            <mat-select multiple formControlName="idsMedicos">
+              <mat-option [value]="medico.id" *ngFor="let medico of medicos$ | async">{{medico.nome}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="Ehcirurgia == false"appearance="outline">
+            <mat-label>Medicos</mat-label>
+            <mat-select  multiple formControlName="idsMedicos">
+              <mat-option [disabled]="isOptionDisabled(medico.id)" [value]="medico.id" *ngFor="let medico of medicos$ | async">{{medico.nome}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <div class="d-flex justify-content-end gap-2 mt-5">
+          <button
+            type="submit"
+            class="py-3 px-5"
+            color="primary"
+            mat-raised-button
+            
+          >
+            Salvar
+          </button>
+          <button
+            routerLink="/atividades/listar"
+            class="py-3 px-5"
+            color="warn"
+            mat-stroked-button
+          >
+            Voltar
+          </button>
+        </div>
+      </form>
